@@ -1,0 +1,14 @@
+.carousel_arrow {
+  opacity: 0.8;
+  transition: filter 0.1s;
+  filter: drop-shadow(0 0 0.1rem black);
+  transition: opacity 0.1s ease-in-out;
+}
+
+.carousel_arrow:hover {
+  opacity: 1;
+}
+
+.carousel_arrow:active {
+  opacity: 0.4;
+}

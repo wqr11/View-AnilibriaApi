@@ -1,0 +1,108 @@
+.video_controls {
+  position: absolute;
+  display: flex;
+  gap: 0.5rem;
+  top: 0.5rem;
+  right: 1rem;
+}
+
+.select_container {
+  position: relative;
+}
+
+.control {
+  padding: 0.8rem;
+  background-color: #212529;
+  color: white;
+  font-weight: 500;
+  border-radius: 12px;
+  transition: background-color 0.1s;
+}
+
+.control:hover {
+  background-color: #495057;
+}
+
+.control:active {
+  background-color: #868e96;
+}
+
+.control_episode_menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: 3.5rem;
+  right: 0;
+  border-radius: 10px;
+  max-height: 400px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  z-index: 100;
+}
+
+.control_episode_menu::-webkit-scrollbar {
+  display: none;
+}
+
+.episode_container {
+  min-width: 200px;
+}
+
+.episode_preview {
+  min-width: 100%;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.ep_active {
+  filter: brightness(50%);
+}
+
+.episode_link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.episode_ordinal {
+  position: absolute;
+  color: white;
+  font-size: 1.777rem;
+  font-weight: 500;
+  filter: drop-shadow(2px 2px 2px black);
+}
+
+.quality_wrapper {
+  background-color: #212529;
+  border-radius: 10px;
+  overflow: clip;
+}
+
+.control_resolution_menu {
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.quality_link {
+  min-height: 40px;
+  transition: background-color 0.1s;
+  border-radius: 10px;
+}
+
+.quality_link:hover {
+  background-color: #495057;
+}
+
+@media (width <= 600px) {
+  .control {
+    padding: 0.4rem;
+  }
+
+  .episode_container {
+    max-width: 50px;
+  }
+}

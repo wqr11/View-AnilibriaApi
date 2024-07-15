@@ -1,0 +1,106 @@
+.search_container {
+  --search-container-width: 400px;
+  --search-contaner-max-width: 80%;
+  --found-card-height: 160px;
+  --bg-color: #343a40;
+  min-width: var(--search-container-width);
+  max-width: var(--search-contaner-max-width);
+  position: relative;
+  z-index: 100;
+}
+
+.search_div {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  min-height: 80px;
+  min-width: var(--search-container-width);
+  max-width: var(--search-contaner-max-width);
+}
+
+.search_bar {
+  min-width: var(--search-container-width);
+  max-width: var(--search-contaner-max-width);
+  height: 60%;
+  padding-inline: 2.6rem;
+  border-radius: 10px;
+  background-color: var(--bg-color);
+  outline: #495057 solid 2px;
+  transition: outline 0.2s;
+}
+
+.search_bar:hover,
+.search_bar:focus-within {
+  outline: #868e96 solid 2px;
+}
+
+.search_icon {
+  position: absolute;
+  top: calc(50% - 8px);
+  left: 1rem;
+}
+
+.cancel_icon {
+  position: absolute;
+  top: calc(50% - 0.6rem);
+  right: 1rem;
+  font-size: 1.2rem;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.found_div {
+  display: none;
+  position: absolute;
+  width: 100%;
+  max-height: calc(var(--found-card-height) * 3);
+  background-color: #212529;
+  /* border: 2px solid #343a40; */
+  border-radius: 10px;
+  overflow-y: scroll;
+  overflow-x: clip;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  color: white;
+}
+
+.found_div::-webkit-scrollbar {
+  display: none;
+}
+
+.search_container:focus-within .found_div,
+.search_container:hover .found_div {
+  display: block;
+}
+
+.found_card {
+  width: auto;
+  min-height: var(--found-card-height);
+  display: flex;
+}
+
+.poster_image {
+  min-width: calc(var(--found-card-height) / 10 * 7);
+  min-height: 100%;
+}
+
+.secondaries {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5rem;
+}
+
+.main_title {
+  font-size: 1.333rem;
+  font-weight: 500;
+  overflow: clip;
+  white-space: nowrap;
+}
+
+.main_title:hover {
+  text-decoration: underline;
+}
+
+.sub_title {
+  font-weight: 300;
+}

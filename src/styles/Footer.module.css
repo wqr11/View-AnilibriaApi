@@ -1,0 +1,32 @@
+.footer_logo {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.footer_header {
+  text-decoration: underline;
+  user-select: none;
+  margin-bottom: 0.2rem;
+}
+
+.footer_links {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer_link {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+}
+
+.footer_link_logo {
+  font-size: 1.2rem;
+}
+
+.footer_link:hover {
+  text-decoration: underline;
+  color: #ced4da;
+}

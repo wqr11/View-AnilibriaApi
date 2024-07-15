@@ -1,0 +1,37 @@
+.search_button {
+  display: flex;
+  justify-content: center;
+  min-width: 72px;
+  min-height: 72px;
+  top: 0;
+  position: absolute;
+  z-index: 100;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.search_button.opened {
+  left: 0;
+}
+
+.search_input {
+  top: 0;
+  position: absolute;
+  min-height: 72px;
+  max-height: 72px;
+  min-width: 72px;
+  max-width: 72px;
+  z-index: 0;
+  /* transition: all 0.3s ease-in-out; */
+}
+
+.search_input.opened {
+  min-width: 100%;
+}
+
+.cancel_button {
+  position: absolute;
+  right: 1rem;
+  font-size: 1.5rem;
+  color: white;
+}

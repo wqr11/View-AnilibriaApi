@@ -1,0 +1,15 @@
+.carousel_cards {
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0;
+  scrollbar-width: none;
+}
+
+.carousel_cards::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel_card {
+  scroll-snap-align: center;
+}

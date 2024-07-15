@@ -1,0 +1,38 @@
+.nav {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.logo_text {
+  font-size: 3.157rem;
+  user-select: none;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.logo_text:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.navlink {
+  transition: opacity 0.1s ease-in-out;
+}
+
+.navlinks {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navlink:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+@media (width <= 640px) {
+  .navlinks {
+    display: none;
+  }
+}
