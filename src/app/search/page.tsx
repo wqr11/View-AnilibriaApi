@@ -77,8 +77,9 @@ const SearchPage = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-6 flex flex-col">
+      <div className="col-span-6 flex w-full flex-col">
         <form
+          className="w-full"
           onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
             setSearchData(undefined);
@@ -91,7 +92,7 @@ const SearchPage = () => {
             setSearchData(data);
           }}
         >
-          <div className="relative flex min-w-[90%] items-center md:w-auto">
+          <div className="relative flex w-full items-center">
             <input
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                 e.preventDefault();
@@ -131,16 +132,23 @@ const SearchPage = () => {
                   />
                 </a>
 
-                <div className="flex flex-col">
-                  <a
-                    href={`/anime/${item.code}`}
-                    className="ml-2 text-xl font-normal tracking-wide text-white underline-offset-2 transition-opacity duration-100 ease-in-out hover:underline hover:opacity-80 active:opacity-40"
-                  >
-                    {item.names.ru}
-                  </a>
-                  <h4 className="ml-2 text-lg font-light text-gray-300">
-                    {item.names.en}
-                  </h4>
+                <div className="ml-2 font-light text-gray-300">
+                  <div className="flex flex-col">
+                    <a
+                      href={`/anime/${item.code}`}
+                      className="text-xl font-normal tracking-wide underline-offset-2 transition-opacity duration-100 ease-in-out hover:underline hover:opacity-80 active:opacity-40"
+                    >
+                      {item.names.ru}
+                    </a>
+                    <h4 className="text-lg font-light text-gray-300">
+                      {item.names.en}
+                    </h4>
+                  </div>
+                  <div>{item.type.full_string}</div>
+                  <div>
+                    {item.season.year}, {item.genres[0]}
+                    {/* fix this */}
+                  </div>
                 </div>
               </div>
             ))}
