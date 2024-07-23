@@ -1,0 +1,15 @@
+.anime_card_carousel_scroll {
+  scrollbar-width: none;
+}
+
+.anime_card_carousel_scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.shadow {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  box-shadow: 0 0 5rem 2rem black;
+  z-index: 10;
+}

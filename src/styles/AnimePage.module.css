@@ -21,6 +21,22 @@
   border-radius: 10px;
 }
 
+@keyframes ScaleAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.poster:hover {
+  animation: ScaleAnimation 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
 .text_wrapper {
   max-width: 75%;
   display: flex;
@@ -47,7 +63,7 @@
 .data_desc {
   margin-top: 0.5rem;
   display: grid;
-  grid-template-columns: minmax(50px, 300px) 1fr;
+  grid-template-columns: 200px 1fr;
 }
 
 .desc_head {
@@ -61,6 +77,14 @@
   padding: 1rem;
   border-radius: 10px;
   border: 2px solid #495057;
+}
+
+.carousel {
+  scrollbar-width: none;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
 }
 
 .videoplayer_wrapper {

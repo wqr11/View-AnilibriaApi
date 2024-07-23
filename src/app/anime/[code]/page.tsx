@@ -4,11 +4,12 @@ import { unstable_cache } from "next/cache";
 
 import Image from "next/image";
 
+import Arrows from "@/components/Arrows";
 import VideoPlayer from "@/components/VideoPlayer/VideoPlayer";
 
 import styles from "@/styles/AnimePage.module.css";
 
-const getAnimePageData = unstable_cache(async (code) => {
+const getAnimePageData = unstable_cache(async (code: string) => {
   const res = await axios.get(
     `http://localhost:3000/anilibriaApi/title?code=${code}`,
   );
@@ -81,11 +82,11 @@ const AnimePage = async ({ params }) => {
               </div>
               <div className="relative">
                 <div
-                  className={`${styles.carousel} flex max-w-[100%] snap-x snap-mandatory gap-4 overflow-clip scroll-smooth`}
+                  id={`franchise-anime-card-carousel-scroll`}
+                  className={`${styles.carousel} flex max-w-[100%] snap-x snap-mandatory gap-4 overflow-scroll scroll-smooth`}
                 >
                   {franchiseData.map((item, idx) => (
                     <a
-                      id={`slide-${idx}`}
                       href={`/anime/${item.code}`}
                       key={idx}
                       className="relative max-w-[140px] snap-start rounded-md transition-opacity duration-100 hover:opacity-80 active:opacity-40"
@@ -102,6 +103,9 @@ const AnimePage = async ({ params }) => {
                     </a>
                   ))}
                 </div>
+                {franchiseData.length > 3 && (
+                  <Arrows idKey="franchise" scrollDistance={156} />
+                )}
               </div>
             </>
           )}

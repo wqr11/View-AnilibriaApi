@@ -77,8 +77,12 @@ const VideoPlayer = (data) => {
 
   return (
     <>
-      {Object.keys(data.data.player.list).length && (
-        <div style={{ position: "relative" }}>
+      {Object.keys(data.data.player.list).length > 0 && (
+        <div
+          style={{
+            position: "relative",
+          }}
+        >
           <video
             id="video-js"
             ref={videoNode}

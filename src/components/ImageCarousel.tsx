@@ -44,14 +44,18 @@ const content = [
 ];
 
 const ImageCarousel = () => {
+  const carouselId = "hero-carousel";
+
   return (
-    <div className="relative m-auto max-w-[1920px] overflow-clip">
-      <div className={`${styles.carousel_cards} flex h-fit`}>
+    <div className="relative m-auto mt-2 max-w-[1920px]">
+      <div
+        id={carouselId}
+        className={`${styles.carousel_cards} flex h-fit snap-x snap-mandatory`}
+      >
         {content.map((item, idx) => (
           <div
-            id={`slide-${idx + 1}`}
-            key={idx}
-            className={`${styles.carousel_card} relative min-w-fit`}
+            key={`hero-slide-${idx}`}
+            className={`${styles.carousel_card} relative min-w-fit snap-start`}
           >
             <Image
               className="max-h-[600px] min-h-[200px] object-cover brightness-75"
@@ -103,7 +107,7 @@ const ImageCarousel = () => {
         ))}
       </div>
       <div className="absolute left-0 top-[calc(50%-15px)] flex min-w-[100%] justify-between text-3xl text-white">
-        <CarouselArrows />
+        <CarouselArrows carouselId={carouselId} />
       </div>
     </div>
   );

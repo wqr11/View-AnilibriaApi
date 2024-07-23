@@ -7,9 +7,7 @@
 
 .logo_text {
   font-size: 3.157rem;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  user-select: none;
   transition: opacity 0.1s ease-in-out;
 }
 
@@ -24,13 +22,15 @@
 
 .navlink {
   transition: opacity 0.1s ease-in-out;
-}
-.navlink:hover {
-  cursor: pointer;
-  opacity: 0.8;
-}
-.navlink:active {
-  opacity: 0.4;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+
+  &:active {
+    opacity: 0.4;
+  }
 }
 
 .navlinks {
@@ -43,4 +43,4 @@
   .navlinks {
     display: none;
   }
-}/*# sourceMappingURL=Navbar.module.css.map */
+}

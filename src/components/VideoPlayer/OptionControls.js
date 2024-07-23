@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import ImageWithFallback from "@/components/ImageWithFallback";
+import Image from "next/image";
 
 import styles from "@/styles/VideoPlayer.OptionControls.module.css";
 
@@ -62,7 +62,7 @@ const OptionControls = ({
                   setAutoPlay(false);
                 }}
               >
-                <ImageWithFallback
+                <Image
                   width={200}
                   height={113}
                   className={
@@ -70,14 +70,16 @@ const OptionControls = ({
                       ? `${styles.episode_preview} ${styles.ep_active}`
                       : styles.episode_preview
                   }
-                  src={`/anilibriaPosters${data.data.player.list[key].preview}`}
-                  fallbackSrc={previewPlaceholder}
+                  src={
+                    data.data.player.list[key].preview
+                      ? `/anilibriaPosters${data.data.player.list[key].preview}`
+                      : previewPlaceholder
+                  }
                   alt={
                     data.data.player.list[key].name
                       ? data.data.player.list[key].name
                       : `ep-${key}`
                   }
-                  loading="lazy"
                 />
                 <h3 className={styles.episode_ordinal}>
                   {data.data.player.list[key].episode}

@@ -1,0 +1,39 @@
+.card_wrapper {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.poster {
+  transition: filter 0.1s ease-in-out;
+}
+
+.card_wrapper:hover > .poster {
+  filter: brightness(0.6);
+}
+
+.play_button {
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.play_button:hover {
+  opacity: 1 !important;
+}
+
+.play_button:active {
+  opacity: 0.4 !important;
+}
+
+.card_wrapper:hover > .play_button {
+  opacity: 0.8;
+}
+
+.card_shadow {
+  position: absolute;
+  bottom: 2;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 0 5rem 6rem black;
+  opacity: 0.6;
+  z-index: 10;
+}

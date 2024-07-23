@@ -7,7 +7,7 @@ import styles from "@/styles/Footer.module.css";
 
 const Footer = () => {
   return (
-    <div
+    <footer
       className={`${unbounded.className} flex flex-col items-center justify-evenly gap-8 bg-[#212529] px-4 py-20 text-white md:flex-row md:items-start md:gap-0`}
     >
       <div className="flex justify-center" style={{ alignItems: "center" }}>
@@ -42,7 +42,7 @@ const Footer = () => {
           </a>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
