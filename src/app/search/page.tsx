@@ -8,7 +8,11 @@ import Image from "next/image";
 import { IoSearchCircle as Search } from "react-icons/io5";
 
 import СhosenSettingCategory from "@/components/СhosenSettingCategory";
-import Genres from "@/components/SearchPage/Genres";
+import SettingOption from "@/components/SearchPage/SettingOption";
+
+import SortSettings from "@/components/SortSettings";
+
+import FoundCard from "@/components/SearchPage/FoundCard";
 
 import { AnimeData } from "@/util/AnimeDataType";
 import getSearchDataAction from "../actions/getSearchDataAction";
@@ -24,6 +28,13 @@ const SearchPage = () => {
 
   const [chosenGenres, setChosenGenres] = useState<Array<string>>([]);
   const [chosenYears, setChosenYears] = useState<Array<string>>([]);
+  const [chosenTypes, setChosenTypes] = useState<Array<string>>([]);
+  const [chosenSortVariant, setChosenSortVariant] = useState<Array<string>>([]);
+  const [chosenSortDirection, setChosenSortDirection] = useState<Array<string>>(
+    [],
+  );
+  const [itemsPerPage, setItemsPerPage] = useState<string>("20");
+  const [page, setPage] = useState<number>(1);
 
   const [yearInputText, setYearInputText] = useState<string>("");
 
@@ -32,8 +43,8 @@ const SearchPage = () => {
   return (
     <div className="m-auto mt-4 flex max-w-[95%] grid-cols-8 flex-col items-center gap-4 md:grid md:items-start">
       <div className="col-span-2 size-fit rounded-xl bg-[#343a40] p-4">
-        <h2 className="text-center text-xl font-semibold text-white underline underline-offset-2">
-          Категории поиска
+        <h2 className="text-center text-2xl font-semibold text-white underline underline-offset-4 transition-transform duration-100 ease-in-out hover:scale-110">
+          Категории
         </h2>
         <СhosenSettingCategory
           chosenCategory={chosenGenres}
@@ -43,12 +54,54 @@ const SearchPage = () => {
           chosenCategory={chosenYears}
           setChosenCategory={setChosenYears}
         />
+        <СhosenSettingCategory
+          chosenCategory={chosenTypes}
+          setChosenCategory={setChosenTypes}
+        />
+        <СhosenSettingCategory
+          chosenCategory={chosenSortVariant}
+          setChosenCategory={setChosenSortVariant}
+        />
+        <СhosenSettingCategory
+          chosenCategory={chosenSortDirection}
+          setChosenCategory={setChosenSortDirection}
+        />
         <h3 className={styles.category_title}>Жанры</h3>
-        <Genres chosenGenres={chosenGenres} setChosenGenres={setChosenGenres} />
+        <SettingOption
+          chosenSetting={chosenGenres}
+          setChosenSetting={setChosenGenres}
+          settingValues={["Повседневность", "Ужасы", "Сейнен", "Хентай"]}
+        />
+        <h3 className={styles.category_title}>Тип</h3>
+        <SettingOption
+          chosenSetting={chosenTypes}
+          setChosenSetting={setChosenTypes}
+          settingValues={["ТВ", "Фильм", "OVA"]}
+        />
+        <h3 className={styles.category_title}>Сортировка</h3>
+
+        <SortSettings
+          setChosenSetting={setChosenSortVariant}
+          settingValues={[
+            "По жанрам",
+            "По типам",
+            "По годам",
+            "По популярности",
+          ]}
+        />
+
+        <h3 className={styles.category_title}>Тип сортировки</h3>
+
+        <SortSettings
+          setChosenSetting={setChosenSortDirection}
+          settingValues={["Возрастание", "Убывание"]}
+        />
+
         <div className="w-full">
           <h3 className={styles.category_title}>Год выхода</h3>
-          <div className="m-auto mt-1 flex w-[60%] min-w-[100px] gap-1 text-white">
+          <div className="m-auto flex w-full gap-1 text-white">
             <form
+              className="ml-4 w-[60%] min-w-[100px]"
               onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                 e.preventDefault();
                 chosenYears.includes(yearInputText)
@@ -64,7 +117,7 @@ const SearchPage = () => {
                     (parseInt(e.target.value) + "").replace("NaN", ""),
                     // converts input into string
                     // possibly containing NaN
-                    // so we turn this number into a string by concatenatig an "" to it
+                    // so we turn this number into a string by concatenating an "" to it
                     // then we replace "NaN" with ""
                   );
                 }}
@@ -74,6 +127,26 @@ const SearchPage = () => {
                 placeholder="Год"
               ></input>
             </form>
+          </div>
+        </div>
+        <div className="w-full">
+          <h3 className={styles.category_title}>Количество на странице</h3>
+          <div className="ml-4 w-[60%] min-w-[100px]">
+            <input
+              className={`${styles.input_area} w-full rounded-xl bg-[#495057] p-2 text-white outline-none`}
+              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                e.preventDefault();
+                setItemsPerPage(
+                  (parseInt(e.target.value) + "").replace("NaN", ""),
+                  // converts input into string
+                  // possibly containing NaN
+                  // so we turn this number into a string by concatenating an "" to it
+                  // then we replace "NaN" with ""
+                );
+              }}
+              value={itemsPerPage}
+              type="text"
+            ></input>
           </div>
         </div>
       </div>
@@ -88,6 +161,11 @@ const SearchPage = () => {
               searchText,
               chosenGenres,
               chosenYears,
+              chosenTypes,
+              chosenSortVariant,
+              chosenSortDirection,
+              itemsPerPage,
+              1, // page
             );
             setSearchData(data);
           }}
@@ -121,37 +199,37 @@ const SearchPage = () => {
         {searchData !== undefined && searchData !== null && (
           <div className="mt-4 w-full">
             {searchData.list.map((item, idx) => (
-              <div key={`found-${idx}`} className="mb-2 flex">
-                <a href={`/anime/${item.code}`}>
-                  <Image
-                    className="min-w-[160px] rounded-md transition-transform duration-100 ease-in-out hover:scale-105 hover:cursor-pointer hover:opacity-80 active:opacity-40"
-                    width={160}
-                    height={90}
-                    src={`/anilibriaPosters${item.posters.original.url}`}
-                    alt={item.names.ru}
-                  />
-                </a>
-
-                <div className="ml-2 font-light text-gray-300">
-                  <div className="flex flex-col">
-                    <a
-                      href={`/anime/${item.code}`}
-                      className="text-xl font-normal tracking-wide underline-offset-2 transition-opacity duration-100 ease-in-out hover:underline hover:opacity-80 active:opacity-40"
-                    >
-                      {item.names.ru}
-                    </a>
-                    <h4 className="text-lg font-light text-gray-300">
-                      {item.names.en}
-                    </h4>
-                  </div>
-                  <div>{item.type.full_string}</div>
-                  <div>
-                    {item.season.year}, {item.genres[0]}
-                    {/* fix this */}
-                  </div>
-                </div>
-              </div>
+              <FoundCard key={`found-${idx}`} item={item} />
             ))}
+            <form
+              onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
+                e.preventDefault();
+                const newData = await getSearchDataAction(
+                  searchText,
+                  chosenGenres,
+                  chosenYears,
+                  chosenTypes,
+                  chosenSortVariant,
+                  chosenSortDirection,
+                  itemsPerPage,
+                  page,
+                );
+                setSearchData({
+                  list: searchData.list.concat(newData.list),
+                  pagination: newData.pagination,
+                });
+              }}
+            >
+              <button
+                type="submit"
+                onClick={(e: React.PointerEvent<HTMLButtonElement>) => {
+                  setPage(page + 1);
+                }}
+                className="w-full rounded-xl bg-white p-2 text-2xl font-medium transition-opacity duration-100 ease-in-out hover:opacity-80 active:opacity-40"
+              >
+                Еще
+              </button>
+            </form>
           </div>
         )}
       </div>

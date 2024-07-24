@@ -65,7 +65,7 @@ export type AnimeData = {
     week_day: number;
   };
   description: string;
-  in_favourites: number;
+  in_favorites: number;
   blocked: {
     blocked: boolean;
     bakanim: boolean;
