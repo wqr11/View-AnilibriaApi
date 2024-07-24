@@ -5,8 +5,4 @@
   font-weight: 600;
   color: white;
   transition: transform 0.1s ease-in-out;
-}
-.category_title:hover {
-  transform: scale(1.1) translateX(10px);
-  cursor: pointer;
 }/*# sourceMappingURL=SearchPage.module.css.map */
