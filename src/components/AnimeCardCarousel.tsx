@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import AnimeCard from "@/components/AnimeCard";
 import Arrows from "@/components/Arrows";
 
@@ -5,14 +7,9 @@ import { AnimeData } from "@/util/AnimeDataType";
 
 import styles from "@/styles/AnimeCardCarousel.module.css";
 
-export const dynamic = "force-dynamic";
-
 const getAnimeData = async (host: string, url: string) => {
-  const res = await fetch(`${host}${url}`);
-  if (!res.ok) {
-    throw new Error("FETCH ERROR IN getAnimeData FUNCTION");
-  }
-  return await res.json();
+  const res = await axios.get(`${host}${url}`);
+  return res.data;
 };
 
 const AnimeCardCarousel = async (props: { url: string; idKey: string }) => {
