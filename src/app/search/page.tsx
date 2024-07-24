@@ -266,38 +266,35 @@ const SearchPage = ({
             {searchData.list.map((item, idx) => (
               <FoundCard key={`found-${idx}`} item={item} />
             ))}
-            {searchData.pagination.pages !==
-              searchData.pagination.current_page && (
-              <form
-                onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
-                  e.preventDefault();
-                  const newData = await getSearchDataAction(
-                    searchText,
-                    chosenGenres,
-                    chosenYears,
-                    chosenTypes,
-                    chosenSortVariant,
-                    chosenSortDirection,
-                    itemsPerPage,
-                    page,
-                  );
-                  setSearchData({
-                    list: searchData.list.concat(newData.list),
-                    pagination: newData.pagination,
-                  });
+            <form
+              onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
+                e.preventDefault();
+                const newData = await getSearchDataAction(
+                  searchText,
+                  chosenGenres,
+                  chosenYears,
+                  chosenTypes,
+                  chosenSortVariant,
+                  chosenSortDirection,
+                  itemsPerPage,
+                  page,
+                );
+                setSearchData({
+                  list: searchData.list.concat(newData.list),
+                  pagination: newData.pagination,
+                });
+              }}
+            >
+              <button
+                type="submit"
+                onClick={() => {
+                  setPage(page + 1);
                 }}
+                className="w-full rounded-xl bg-white p-2 text-2xl font-medium transition-opacity duration-100 ease-in-out hover:opacity-80 active:opacity-40"
               >
-                <button
-                  type="submit"
-                  onClick={() => {
-                    setPage(page + 1);
-                  }}
-                  className="w-full rounded-xl bg-white p-2 text-2xl font-medium transition-opacity duration-100 ease-in-out hover:opacity-80 active:opacity-40"
-                >
-                  Еще
-                </button>
-              </form>
-            )}
+                Еще
+              </button>
+            </form>
           </div>
         )}
       </div>

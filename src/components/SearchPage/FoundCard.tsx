@@ -12,7 +12,7 @@ const FoundCard = ({ item }: { item: AnimeData }) => {
         <Image
           className="min-w-[160px] rounded-md transition-transform duration-100 ease-in-out hover:scale-105 hover:cursor-pointer hover:opacity-80 active:opacity-40"
           width={160}
-          height={90}
+          height={229}
           src={`/anilibriaPosters${item.posters.original.url}`}
           alt={item.names.ru}
         />
