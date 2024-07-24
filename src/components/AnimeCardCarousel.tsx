@@ -5,6 +5,8 @@ import { AnimeData } from "@/util/AnimeDataType";
 
 import styles from "@/styles/AnimeCardCarousel.module.css";
 
+export const dynamic = "force-dynamic";
+
 const getAnimeData = async (host: string, url: string) => {
   const res = await fetch(`${host}${url}`);
   if (!res.ok) {
