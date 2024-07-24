@@ -12,9 +12,7 @@ import VideoPlayer from "@/components/VideoPlayer/VideoPlayer";
 import styles from "@/styles/AnimePage.module.css";
 
 const getAnimePageData = unstable_cache(async (code: string) => {
-  const res = await axios.get(
-    `${process.env.NEXT_AUTH_URL}/anilibriaApi/title?code=${code}`,
-  );
+  const res = await axios.get(`https://api.anilibria.tv/v3/title?code=${code}`);
   return res.data;
 });
 
@@ -24,7 +22,7 @@ const getAnimeFranchiseData = unstable_cache(async (data) => {
   if (data.franchises.length > 0) {
     for (const item of data.franchises[0].releases) {
       const unit = await axios.get(
-        `${process.env.NEXT_AUTH_URL}/anilibriaApi/title?code=${item.code}`,
+        `https://api.anilibria.tv/v3/title?code=${item.code}`,
       );
 
       res.push(unit.data);
