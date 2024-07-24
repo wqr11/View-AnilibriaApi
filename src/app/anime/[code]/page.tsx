@@ -4,6 +4,8 @@ import { unstable_cache } from "next/cache";
 
 import Image from "next/image";
 
+import { AnimeData } from "@/util/AnimeDataType";
+
 import Arrows from "@/components/Arrows";
 import VideoPlayer from "@/components/VideoPlayer/VideoPlayer";
 
@@ -32,8 +34,8 @@ const getAnimeFranchiseData = unstable_cache(async (data) => {
 });
 
 const AnimePage = async ({ params }) => {
-  const data = await getAnimePageData(params.code);
-  const franchiseData = await getAnimeFranchiseData(data);
+  const data: AnimeData = await getAnimePageData(params.code);
+  const franchiseData: AnimeData[] = await getAnimeFranchiseData(data);
 
   return (
     <div className={styles.content}>
@@ -55,22 +57,35 @@ const AnimePage = async ({ params }) => {
           </div>
           <div className={styles.data_desc}>
             <div className={styles.desc_head}>Тип</div>
-            <div>{data.type.full_string}</div>
+            <a
+              href={`/search?type=${data.type.string}`}
+              className={styles.search_link}
+            >
+              {data.type.full_string}
+            </a>
             <div className={styles.desc_head}>Эпизоды</div>
             <div>{data.player.episodes.string}</div>
             <div className={styles.desc_head}>Статус</div>
             <div>{data.status.string}</div>
             <div className={styles.desc_head}>Жанр</div>
-            <div>{data.genres.join(", ")}</div>
+            <a
+              href={`/search?genres=${data.genres}`}
+              className={styles.search_link}
+            >
+              {data.genres.join(", ")}
+            </a>
             <div className={styles.desc_head}>Сезон</div>
-            <div>
+            <a
+              href={`/search?year=${data.season.year}`}
+              className={styles.search_link}
+            >
               {data.season.string
                 ? data.season.string.toUpperCase().slice(0, 1) +
                   data.season.string.slice(1) +
                   ", " +
                   data.season.year
                 : data.season.year}
-            </div>
+            </a>
           </div>
           <div className={styles.anime_desc}>
             <p>{data.description}</p>

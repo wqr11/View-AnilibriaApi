@@ -84,8 +84,8 @@ const ImageCarousel = () => {
                 {item.genres.map((item, idx) => (
                   <Link
                     key={idx}
-                    className="text-xsactive:opacity-60 rounded-xl bg-white p-2 md:text-sm"
-                    href={`/search?genre=${item}`}
+                    className="rounded-xl bg-white p-2 text-xs hover:opacity-80 active:opacity-40 md:text-sm"
+                    href={`/search?genres=${item}`}
                   >
                     {item}
                   </Link>
@@ -94,8 +94,7 @@ const ImageCarousel = () => {
               <div className="ml-[3%] mt-[2rem] flex gap-8 font-bold">
                 <Link
                   href={`/anime/${item.code}`}
-                  className="flex gap-1 rounded-xl bg-white p-[1.5rem] text-xl font-medium active:opacity-60"
-                  style={{ alignItems: "center" }}
+                  className="flex items-center gap-1 rounded-xl bg-white p-[1.5rem] text-xl font-medium transition-transform duration-100 ease-in-out hover:scale-110 active:opacity-60"
                 >
                   <FaPlay />
                   Смотреть

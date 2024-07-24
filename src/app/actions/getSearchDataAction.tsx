@@ -1,5 +1,7 @@
 "use server";
 
+import axios from "axios";
+
 const controller = new AbortController();
 const signal = controller.signal;
 
@@ -26,13 +28,26 @@ export default async function getSearchDataAction(
   const chosenYearsOption =
     chosenYears.length > 0 ? `&year=${chosenYears.join(",")}` : "";
 
+  const typesTranscribeDict = {
+    MOVIE: 0,
+    Фильм: 0,
+    TV: 1,
+    ТВ: 1,
+    OVA: 2,
+    ONA: 3,
+    SPECIAL: 4,
+    Спешл: 4,
+  };
+
   const chosenTypesOption =
-    chosenTypes.length > 0 ? `&type=${chosenTypes.join(",")}` : "";
+    chosenTypes.length > 0
+      ? `&type=${chosenTypes.map((type) => typesTranscribeDict[type]).join(",")}`
+      : "";
 
   const sortTranscribeDict = {
-    "По жанрам": "genres",
-    "По типам": "type",
-    "По годам": "year",
+    "По жанрам": "genres[0]",
+    "По типам": "type.code",
+    "По годам": "season.year",
     "По популярности": "in_favorites",
     Возрастание: "0",
     Убывание: "1",

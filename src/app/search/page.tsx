@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import styles from "@/styles/SearchPage.module.css";
 
-import Image from "next/image";
 import { IoSearchCircle as Search } from "react-icons/io5";
 
 import СhosenSettingCategory from "@/components/СhosenSettingCategory";
@@ -20,15 +19,36 @@ import { getSearchDataAbort } from "../actions/getSearchDataAction";
 
 import Spinner from "@/components/Spinner";
 
-const SearchPage = () => {
+const SearchPage = ({
+  searchParams,
+}: {
+  searchParams: {
+    genres?: string;
+    type?: string;
+    year?: string;
+  };
+}) => {
   const [searchData, setSearchData] = useState<{
     list: AnimeData[];
-    pagination: object;
+    pagination: {
+      pages: number;
+      current_page: number;
+      items_per_page: number;
+      total_items: number;
+    };
   }>();
 
-  const [chosenGenres, setChosenGenres] = useState<Array<string>>([]);
-  const [chosenYears, setChosenYears] = useState<Array<string>>([]);
-  const [chosenTypes, setChosenTypes] = useState<Array<string>>([]);
+  const [pending, setPending] = useState<boolean>(true);
+
+  const [chosenGenres, setChosenGenres] = useState<Array<string>>(
+    searchParams.genres ? searchParams.genres.split(",") : [],
+  );
+  const [chosenYears, setChosenYears] = useState<Array<string>>(
+    searchParams.year ? searchParams.year.split(",") : [],
+  );
+  const [chosenTypes, setChosenTypes] = useState<Array<string>>(
+    searchParams.type ? searchParams.type.split(",") : [],
+  );
   const [chosenSortVariant, setChosenSortVariant] = useState<Array<string>>([]);
   const [chosenSortDirection, setChosenSortDirection] = useState<Array<string>>(
     [],
@@ -41,7 +61,7 @@ const SearchPage = () => {
   const [searchText, setSearchText] = useState<string>("");
 
   return (
-    <div className="m-auto mt-4 flex max-w-[95%] grid-cols-8 flex-col items-center gap-4 md:grid md:items-start">
+    <div className="m-auto mt-4 flex max-w-[95%] grid-cols-8 flex-col items-center gap-4 md:items-start lg:grid">
       <div className="col-span-2 size-fit rounded-xl bg-[#343a40] p-4">
         <h2 className="text-center text-2xl font-semibold text-white underline underline-offset-4 transition-transform duration-100 ease-in-out hover:scale-110">
           Категории
@@ -70,13 +90,50 @@ const SearchPage = () => {
         <SettingOption
           chosenSetting={chosenGenres}
           setChosenSetting={setChosenGenres}
-          settingValues={["Повседневность", "Ужасы", "Сейнен", "Хентай"]}
+          settingValues={[
+            "Боевые искусства",
+            "Вампиры",
+            "Гарем",
+            "Демоны",
+            "Детектив",
+            "Дзёсей",
+            "Драма",
+            "Игры",
+            "Исекай",
+            "Исторический",
+            "Киберпанк",
+            "Комедия",
+            "Магия",
+            "Меха",
+            "Мистика",
+            "Музыка",
+            "Пародия",
+            "Повседневность",
+            "Приключения",
+            "Психологическое",
+            "Романтика",
+            "Сверхъестественное",
+            "Сёдзе",
+            "Сёдзе-ай",
+            "Сейнен",
+            "Сёнен",
+            "Сёнен-ай",
+            "Спорт",
+            "Супер сила",
+            "Триллер",
+            "Ужасы",
+            "Фантастика",
+            "Фэнтези",
+            "Школа",
+            "Экшен",
+            "Этти",
+          ]}
         />
         <h3 className={styles.category_title}>Тип</h3>
         <SettingOption
           chosenSetting={chosenTypes}
           setChosenSetting={setChosenTypes}
-          settingValues={["ТВ", "Фильм", "OVA"]}
+          settingValues={["ТВ", "Фильм", "OVA", "ONA", "Спешл"]}
         />
         <h3 className={styles.category_title}>Сортировка</h3>
 
@@ -155,6 +212,7 @@ const SearchPage = () => {
           className="w-full"
           onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
+            setPending(false);
             setSearchData(undefined);
             getSearchDataAbort();
             const data = await getSearchDataAction(
@@ -189,47 +247,57 @@ const SearchPage = () => {
             </button>
           </div>
         </form>
-        {searchData === undefined && (
+        {!pending && searchData === undefined && (
           <div className="mt-4 flex flex-col items-center">
             <h3 className="mb-4 text-3xl text-white">Загрузка</h3>
             <Spinner loading={searchData === undefined} />
           </div>
         )}
 
-        {searchData !== undefined && searchData !== null && (
+        {searchData !== undefined && searchData.list.length === 0 && (
+          <div className="mt-2 flex flex-col items-center rounded-xl bg-[#343a40] px-6 py-8 text-white xl:items-start">
+            <h3 className="text-3xl font-semibold">Ничего не найдено!</h3>
+            <p className="text-xl">Попробуйте изменить настройки фильтров.</p>
+          </div>
+        )}
+
+        {searchData !== undefined && searchData.list.length !== 0 && (
           <div className="mt-4 w-full">
             {searchData.list.map((item, idx) => (
               <FoundCard key={`found-${idx}`} item={item} />
             ))}
-            <form
-              onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
-                e.preventDefault();
-                const newData = await getSearchDataAction(
-                  searchText,
-                  chosenGenres,
-                  chosenYears,
-                  chosenTypes,
-                  chosenSortVariant,
-                  chosenSortDirection,
-                  itemsPerPage,
-                  page,
-                );
-                setSearchData({
-                  list: searchData.list.concat(newData.list),
-                  pagination: newData.pagination,
-                });
-              }}
-            >
-              <button
-                type="submit"
-                onClick={(e: React.PointerEvent<HTMLButtonElement>) => {
-                  setPage(page + 1);
+            {searchData.pagination.pages !==
+              searchData.pagination.current_page && (
+              <form
+                onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
+                  e.preventDefault();
+                  const newData = await getSearchDataAction(
+                    searchText,
+                    chosenGenres,
+                    chosenYears,
+                    chosenTypes,
+                    chosenSortVariant,
+                    chosenSortDirection,
+                    itemsPerPage,
+                    page,
+                  );
+                  setSearchData({
+                    list: searchData.list.concat(newData.list),
+                    pagination: newData.pagination,
+                  });
                 }}
-                className="w-full rounded-xl bg-white p-2 text-2xl font-medium transition-opacity duration-100 ease-in-out hover:opacity-80 active:opacity-40"
               >
-                Еще
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  onClick={() => {
+                    setPage(page + 1);
+                  }}
+                  className="w-full rounded-xl bg-white p-2 text-2xl font-medium transition-opacity duration-100 ease-in-out hover:opacity-80 active:opacity-40"
+                >
+                  Еще
+                </button>
+              </form>
+            )}
           </div>
         )}
       </div>

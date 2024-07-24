@@ -64,10 +64,12 @@
   margin-top: 0.5rem;
   display: grid;
   grid-template-columns: 200px 1fr;
+  color: #dee2e6;
 }
 
 .desc_head {
   font-weight: 400;
+  color: white;
 }
 
 .anime_desc {
@@ -106,4 +108,19 @@
   .text_wrapper {
     max-width: 100%;
   }
+}
+
+.search_link {
+  color: #748ffc;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.search_link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 0.8;
+}
+
+.search_link:active {
+  opacity: 0.4;
 }
