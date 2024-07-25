@@ -18,7 +18,7 @@ const HomePage = async () => {
   return (
     <div className={`${unbounded.className}`}>
       <ImageCarousel />
-      <div className="mt-4 flex w-full flex-col gap-4">
+      {/* <div className="mt-4 flex w-full flex-col gap-4">
         {animeCardCarouselUrls.map((section, idx) => (
           <div key={`carousel-wrapper-${idx}`}>
             <h3
@@ -29,7 +29,7 @@ const HomePage = async () => {
             <AnimeCardCarousel url={section.url} idKey={`carousel-${idx}`} />
           </div>
         ))}
-      </div>
+      </div> */}
       <div className="flex">
         <a
           href="/search"
