@@ -1,8 +1,24 @@
 import { unbounded } from "@/util/fonts";
 import { montserrat } from "@/util/fonts";
 
+import { AnimeData } from "@/util/AnimeDataType";
+
 import AnimeCardCarousel from "@/components/AnimeCardCarousel";
 import ImageCarousel from "@/components/ImageCarousel";
+
+const getAnimeCardData = async (sections) => {
+  const result: { sectionTag: string; data: AnimeData[] }[] = [];
+
+  for (let section of sections) {
+    const res = await fetch(`https://api.anilibria.tv/v3/${section.url}`);
+    if (!res.ok) {
+      throw new Error("FETCH FAILED IN getAnimeCardData in HomePage");
+    }
+    const data = await res.json();
+    result.push({ sectionTag: section.sectionTag, data: data.list });
+  }
+  return result;
+};
 
 const HomePage = async () => {
   const animeCardCarouselUrls = [
@@ -15,21 +31,26 @@ const HomePage = async () => {
     { sectionTag: "Ужасы", url: "title/search?genres=Ужасы&limit=20" },
   ];
 
+  const data = await getAnimeCardData(animeCardCarouselUrls);
+
   return (
     <div className={`${unbounded.className}`}>
       <ImageCarousel />
-      {/* <div className="mt-4 flex w-full flex-col gap-4">
-        {animeCardCarouselUrls.map((section, idx) => (
+      <div className="mt-4 flex w-full flex-col">
+        {data.map((dataSlice, idx) => (
           <div key={`carousel-wrapper-${idx}`}>
             <h3
               className={`${montserrat.className} m-4 flex justify-center text-4xl font-semibold text-white`}
             >
-              {section.sectionTag}
+              {dataSlice.sectionTag}
             </h3>
-            <AnimeCardCarousel url={section.url} idKey={`carousel-${idx}`} />
+            <AnimeCardCarousel
+              data={dataSlice.data}
+              idKey={`carousel-${idx}`}
+            />
           </div>
         ))}
-      </div> */}
+      </div>
       <div className="flex">
         <a
           href="/search"

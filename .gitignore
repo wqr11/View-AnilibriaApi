@@ -42,3 +42,8 @@ videos/*
 !videos/*.js
 !videos/*.ts
 public/_next-video
+
+#docker files
+Dockerfile
+.dockerignore
+/Dockerfile

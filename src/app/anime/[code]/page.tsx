@@ -62,7 +62,7 @@ const AnimePage = async ({ params }) => {
               {data.type.full_string}
             </a>
             <div className={styles.desc_head}>Эпизоды</div>
-            <div>{data.player.episodes.string}</div>
+            <div>{data.player.episodes?.string}</div>
             <div className={styles.desc_head}>Статус</div>
             <div>{data.status.string}</div>
             <div className={styles.desc_head}>Жанр</div>
@@ -124,9 +124,11 @@ const AnimePage = async ({ params }) => {
           )}
         </div>
       </div>
-      <div className={styles.videoplayer_wrapper}>
-        <VideoPlayer data={data} />
-      </div>
+      {data.player.list && (
+        <div className={styles.videoplayer_wrapper}>
+          <VideoPlayer data={data} />
+        </div>
+      )}
     </div>
   );
 };

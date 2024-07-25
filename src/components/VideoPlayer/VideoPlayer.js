@@ -20,7 +20,7 @@ const VideoPlayer = (data) => {
   );
 
   const [chosenQuality, setChosenQuality] = useState(
-    Object.keys(data.data.player.list).length &&
+    Object.keys(data.data.player.list).length > 0 &&
       Object.keys(data.data.player.list[chosenEpisode].hls).find(
         (e) => !!data.data.player.list[chosenEpisode].hls[e] === true,
       ),
@@ -69,10 +69,11 @@ const VideoPlayer = (data) => {
     videojs
       .getPlayer("video-js_html5_api")
       .poster(
-        data.data.player.list[chosenEpisode].preview
-          ? `/anilibriaPosters${data.data.player.list[chosenEpisode].preview}`
-          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHbxSdnZhvJdPAAHWy6i0rL3IJc8eIGPXzFw&s",
+        `/anilibriaPosters${data.data.player.list[chosenEpisode].preview}`,
       );
+    // cant run on first load cuz the <video> tag with id is not renderred yet
+    // so we have to specify the poster attribute manually below
+    // PS. works for <source> tag the same way, so specify that manually too
   }
 
   return (
@@ -87,11 +88,7 @@ const VideoPlayer = (data) => {
             id="video-js"
             ref={videoNode}
             className="video-js"
-            poster={
-              data.data.player.list[chosenEpisode].preview
-                ? `/anilibriaPosters${data.data.player.list[chosenEpisode].preview}`
-                : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHbxSdnZhvJdPAAHWy6i0rL3IJc8eIGPXzFw&s"
-            }
+            poster={`/anilibriaPosters${data.data.player.list[chosenEpisode].preview}`}
             style={{ width: "100%", height: "auto", aspectRatio: "16/9" }}
             autoPlay={isAutoPlay}
             onTimeUpdate={() => {

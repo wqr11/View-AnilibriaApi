@@ -10,7 +10,7 @@ import styles from "@/styles/AnimeCard.module.css";
 const AnimeCard = ({
   data,
   width = 240,
-  height = 135,
+  height = 343,
 }: {
   data: AnimeData;
   width?: number;

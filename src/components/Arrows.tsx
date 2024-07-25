@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import {
   IoIosArrowBack as LeftArrow,
   IoIosArrowForward as RightArrow,
@@ -19,7 +21,11 @@ const Arrows = ({
           e.preventDefault();
           document
             .getElementById(`${idKey}-anime-card-carousel-scroll`)
-            .scrollBy({ top: 0, left: -scrollDistance, behavior: "smooth" });
+            .scrollBy({
+              top: 0,
+              left: -scrollDistance,
+              behavior: "smooth",
+            });
         }}
         className={`absolute left-0 top-[calc(50%-15px)] z-20 opacity-80 hover:opacity-100 active:opacity-40`}
       >
@@ -30,7 +36,11 @@ const Arrows = ({
           e.preventDefault();
           document
             .getElementById(`${idKey}-anime-card-carousel-scroll`)
-            .scrollBy({ top: 0, left: scrollDistance, behavior: "smooth" });
+            .scrollBy({
+              top: 0,
+              left: scrollDistance,
+              behavior: "smooth",
+            });
         }}
         className={`absolute right-0 top-[calc(50%-15px)] z-20 opacity-80 hover:opacity-100 active:opacity-40`}
       >

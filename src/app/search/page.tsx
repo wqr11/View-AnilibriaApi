@@ -38,7 +38,10 @@ const SearchPage = ({
     };
   }>();
 
+  console.log(searchData?.pagination);
+
   const [pending, setPending] = useState<boolean>(true);
+  const [newDataPending, setNewDataPending] = useState<boolean>(false);
 
   const [chosenGenres, setChosenGenres] = useState<Array<string>>(
     searchParams.genres ? searchParams.genres.split(",") : [],
@@ -63,7 +66,7 @@ const SearchPage = ({
   return (
     <div className="m-auto mt-4 flex max-w-[95%] grid-cols-8 flex-col items-center gap-4 md:items-start lg:grid">
       <div className="col-span-2 size-fit rounded-xl bg-[#343a40] p-4">
-        <h2 className="text-center text-2xl font-semibold text-white underline underline-offset-4 transition-transform duration-100 ease-in-out hover:scale-110">
+        <h2 className="text-center text-4xl font-semibold text-white transition-transform duration-100 ease-in-out hover:scale-110 lg:text-3xl">
           Категории
         </h2>
         <СhosenSettingCategory
@@ -202,7 +205,7 @@ const SearchPage = ({
                 );
               }}
               value={itemsPerPage}
-              type="text"
+              type="number"
             ></input>
           </div>
         </div>
@@ -269,6 +272,7 @@ const SearchPage = ({
             <form
               onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
                 e.preventDefault();
+                setNewDataPending(true);
                 const newData = await getSearchDataAction(
                   searchText,
                   chosenGenres,
@@ -283,8 +287,17 @@ const SearchPage = ({
                   list: searchData.list.concat(newData.list),
                   pagination: newData.pagination,
                 });
+                setNewDataPending(false);
               }}
             >
+              {newDataPending && (
+                <div className="m-4 mb-8 flex flex-col items-center gap-2">
+                  <h3 className="mb-1 text-2xl font-medium text-white">
+                    Загрузка
+                  </h3>
+                  <Spinner loading={newDataPending} />
+                </div>
+              )}
               <button
                 type="submit"
                 onClick={() => {
