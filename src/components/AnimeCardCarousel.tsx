@@ -6,7 +6,11 @@ import { AnimeData } from "@/util/AnimeDataType";
 import styles from "@/styles/AnimeCardCarousel.module.css";
 
 const getAnimeData = async (url: string) => {
-  const res = await fetch(`https://api.anilibria.tv/v3/${url}`);
+  const res = await fetch(`https://api.anilibria.tv/v3/${url}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   return await res.json();
 };
 
