@@ -13,7 +13,7 @@ const AnimeCardCarousel = async ({
   idKey: string;
 }) => {
   return (
-    <div key={idKey} className="relative">
+    <div key={idKey} className="relative mx-4">
       <div
         id={`${idKey}-anime-card-carousel-scroll`}
         className={`${styles.anime_card_carousel_scroll} flex w-[100%] snap-x snap-mandatory gap-4 overflow-scroll`}
@@ -23,8 +23,6 @@ const AnimeCardCarousel = async ({
         ))}
       </div>
       <Arrows idKey={idKey} />
-      <div className={`${styles.shadow} left-0`}></div>
-      <div className={`${styles.shadow} right-0`}></div>
     </div>
   );
 };

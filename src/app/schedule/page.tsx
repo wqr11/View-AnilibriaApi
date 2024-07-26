@@ -2,7 +2,11 @@ import AnimeCard from "@/components/AnimeCard";
 import AnimeCardCarousel from "@/components/AnimeCardCarousel";
 
 const getScheduleData = async () => {
-  const res = await fetch("https://api.anilibria.tv/v3/title/schedule");
+  const res = await fetch("https://api.anilibria.tv/v3/title/schedule", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   if (!res.ok) {
     throw new Error("FETCH ERROR IN getScheduleData app/schedule/page.tsx");
   }
@@ -11,8 +15,6 @@ const getScheduleData = async () => {
 
 const SchedulePage = async () => {
   const scheduleData = await getScheduleData();
-
-  console.log(scheduleData);
 
   const daysTranscribeDict = {
     0: "Понедельник",

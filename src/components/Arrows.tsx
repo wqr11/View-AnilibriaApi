@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, ReactNode } from "react";
 
 import {
   IoIosArrowBack as LeftArrow,
@@ -14,38 +14,74 @@ const Arrows = ({
   scrollDistance?: number;
   idKey: string;
 }) => {
+  const [scroll, setScroll] = useState<HTMLElement>(null);
+  const [scrollLeft, setScrollLeft] = useState<number>();
+  const [scrollWidth, setScrollWidth] = useState<number>();
+
+  useEffect(() => {
+    const tempScroll = document.getElementById(
+      `${idKey}-anime-card-carousel-scroll`,
+    );
+    setScroll(tempScroll);
+    setScrollLeft(tempScroll.scrollLeft);
+    setScrollWidth(tempScroll.scrollWidth - tempScroll.clientWidth);
+  }, []);
+
   return (
-    <div key={`${idKey}-arrows`} className="text-3xl text-white">
-      <button
-        onClick={(e: React.PointerEvent<HTMLButtonElement>) => {
-          e.preventDefault();
-          document
-            .getElementById(`${idKey}-anime-card-carousel-scroll`)
-            .scrollBy({
+    <div
+      key={`${idKey}-arrows`}
+      className="flex h-full items-center text-3xl text-white"
+    >
+      <div
+        className="absolute left-0 top-0 h-full"
+        style={{
+          visibility: scrollLeft === 0 ? "hidden" : "visible",
+        }}
+      >
+        <button
+          onClick={(e: React.PointerEvent<HTMLButtonElement>) => {
+            e.preventDefault();
+            scroll.scrollBy({
               top: 0,
               left: -scrollDistance,
-              behavior: "smooth",
             });
+            setScrollLeft(scroll.scrollLeft);
+            setScrollWidth(scroll.scrollWidth - scroll.clientWidth);
+          }}
+          className="relative z-20 h-full opacity-80 hover:opacity-100 active:opacity-40"
+        >
+          <LeftArrow />
+        </button>
+        <div
+          className="absolute top-0 z-10 h-full"
+          style={{ boxShadow: "0 0 5rem 3rem black" }}
+        ></div>
+      </div>
+      <div
+        className="absolute right-0 top-0 h-full overflow-y-clip"
+        style={{
+          visibility: scrollLeft === scrollWidth ? "hidden" : "visible",
         }}
-        className={`absolute left-0 top-[calc(50%-15px)] z-20 opacity-80 hover:opacity-100 active:opacity-40`}
       >
-        <LeftArrow />
-      </button>
-      <button
-        onClick={(e: React.PointerEvent<HTMLButtonElement>) => {
-          e.preventDefault();
-          document
-            .getElementById(`${idKey}-anime-card-carousel-scroll`)
-            .scrollBy({
+        <button
+          onClick={(e: React.PointerEvent<HTMLButtonElement>) => {
+            e.preventDefault();
+            scroll.scrollBy({
               top: 0,
               left: scrollDistance,
-              behavior: "smooth",
             });
-        }}
-        className={`absolute right-0 top-[calc(50%-15px)] z-20 opacity-80 hover:opacity-100 active:opacity-40`}
-      >
-        <RightArrow />
-      </button>
+            setScrollLeft(scroll.scrollLeft);
+            setScrollWidth(scroll.scrollWidth - scroll.clientWidth);
+          }}
+          className="relative z-20 h-full opacity-80 hover:opacity-100 active:opacity-40"
+        >
+          <RightArrow />
+        </button>
+        <div
+          className="absolute top-0 z-10 h-full"
+          style={{ boxShadow: "0 0 5rem 3rem black" }}
+        ></div>
+      </div>
     </div>
   );
 };
