@@ -33,6 +33,7 @@ const getAnimeFranchiseData = unstable_cache(async (data) => {
 
 const AnimePage = async ({ params }) => {
   const data: AnimeData = await getAnimePageData(params.code);
+  console.log(data);
   const franchiseData: AnimeData[] = await getAnimeFranchiseData(data);
 
   return (

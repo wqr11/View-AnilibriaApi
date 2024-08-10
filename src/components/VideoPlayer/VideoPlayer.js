@@ -50,7 +50,7 @@ const VideoPlayer = (data) => {
       player.current = videojs(videoNode.current, {
         ...initialOptions,
       }).ready(() => {
-        console.log("Player Ready");
+        // actions onReady
       });
       //clear up player on dismount
       return () => {

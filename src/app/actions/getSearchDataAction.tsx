@@ -5,7 +5,6 @@ const signal = controller.signal;
 
 export const getSearchDataAbort = () => {
   controller.abort;
-  console.log("CONTROLLER ABORTED");
 };
 
 export default async function getSearchDataAction(

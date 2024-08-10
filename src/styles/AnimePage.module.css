@@ -14,27 +14,19 @@
 .poster_div {
   min-width: var(--poster-min-width);
   width: var(--poster-min-width);
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
 }
 
 .poster {
   min-width: 100%;
   border-radius: 10px;
-}
-
-@keyframes ScaleAnimation {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
+  transition: all 0.3s ease-in-out;
 }
 
 .poster:hover {
-  animation: ScaleAnimation 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transform: translateZ(10px) rotateX(5deg) rotateY(5deg);
+  opacity: 0.8;
 }
 
 .text_wrapper {

@@ -38,8 +38,6 @@ const SearchPage = ({
     };
   }>();
 
-  console.log(searchData?.pagination);
-
   const [pending, setPending] = useState<boolean>(true);
   const [newDataPending, setNewDataPending] = useState<boolean>(false);
 

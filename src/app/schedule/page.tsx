@@ -1,4 +1,3 @@
-import AnimeCard from "@/components/AnimeCard";
 import AnimeCardCarousel from "@/components/AnimeCardCarousel";
 
 const getScheduleData = async () => {
